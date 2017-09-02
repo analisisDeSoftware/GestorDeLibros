@@ -1,0 +1,26 @@
+.open libros.db
+
+CREATE TABLE AUTOR(ID INTEGER NOT NULL PRIMARY KEY, 
+Descripcion varchar(20) UNIQUE);
+
+CREATE TABLE EDITORIAL(ID INTEGER NOT NULL PRIMARY KEY, 
+Descripcion varchar(20) UNIQUE);
+
+CREATE TABLE LIBRO(ISBN varchar(13) NOT NULL PRIMARY KEY,
+Titulo varchar(20),
+Autor varchar(20),
+Editorial varchar(20),
+Edicion INT,
+AnioPublicacion int,
+FOREIGN KEY (Autor) REFERENCES AUTOR(Descripcion), 
+FOREIGN KEY (Editorial) REFERENCES EDITORIAL(Descripcion));
+
+CREATE TABLE USUARIO(ID varchar(15) NOT NULL PRIMARY KEY,
+Password TEXT NOT NULL);
+
+bd.insertAutor("JRR Tolkien");
+bd.insertAutor("JK Rowling");
+bd.insertEditorial("De bolsillo");
+bd.insertEditorial("El saltamontes");
+
+
