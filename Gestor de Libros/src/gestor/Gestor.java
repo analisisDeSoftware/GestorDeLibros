@@ -22,6 +22,8 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -138,7 +140,23 @@ public class Gestor extends JFrame {
 	}
 
 	public Gestor() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				try {
+					bd.close();
+				} catch (SQLException e1) {
+					informar("Error al cerrar la conexión con la base de datos.");
+					e1.printStackTrace();
+				}
+				finally {
+					setVisible(false);
+					dispose();
+				}
+			}
+		});
 		setBounds(100, 100, 1340, 740);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
@@ -272,6 +290,12 @@ public class Gestor extends JFrame {
 			}
 		} catch (SQLException e) {
 			informar("Se ha producido un error al agregar el libro.");
+			try {
+				bd.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			bd = new BD();
 			e.printStackTrace();
 		}
 	}
@@ -369,6 +393,12 @@ public class Gestor extends JFrame {
 		} catch (SQLException e) {
 			informar("Se ha producido un error al agregar el autor.");
 			e.printStackTrace();
+			try {
+				bd.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			bd = new BD();
 		}
 	}
 
@@ -402,7 +432,7 @@ public class Gestor extends JFrame {
 	
 	public void agregarFilaEditorial(Entidad editorial) {
 		int fila = tableModelEditoriales.getRowCount(), columna = cantidadColumnasEntidad - 1;
-		tableModelEditoriales.addRow(filaVaciaLibro);
+		tableModelEditoriales.addRow(filaVaciaEntidad);
 		tableModelEditoriales.setValueAt(editorial.getNombre(), fila, columna);
 		tableModelEditoriales.setValueAt(editorial.getId(), fila, columna -= 1);
 	}
@@ -425,9 +455,9 @@ public class Gestor extends JFrame {
 		limpiarTablaEditoriales();
 		try {
 
-			editoriales = bd.searchEditorial(textBuscarAutor.getText());
+			editoriales = bd.searchEditorial(textBuscarEditorial.getText());
 			for (Entidad e : editoriales) {
-				agregarFilaAutor(e);
+				agregarFilaEditorial(e);
 			}
 		} catch (SQLException e) {
 			informar("Se ha producido un error al realizar la búsqueda de la editorial.");
@@ -437,7 +467,7 @@ public class Gestor extends JFrame {
 	
 	public void insertarEditorial() {
 		try {
-			if(textEditorial.getText().matches(regexAutor)) {
+			if(textEditorial.getText().matches(regexEditorial)) {
 				if (bd.insertEditorial(textEditorial.getText()) == 1) {
 					informar("La editorial se ha insertado con éxito.");
 					actualizarTablaEditoriales();
@@ -448,16 +478,23 @@ public class Gestor extends JFrame {
 		} catch (SQLException e) {
 			informar("Se ha producido un error al agregar la editorial.");
 			e.printStackTrace();
+			try {
+				bd.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			bd = new BD();
 		}
 	}
 
 	public void modificarEditorial() {
 		try {
-			if(textEditorial.getText().matches(regexAutor)) {
-				bd.updateEditorial((int) tableEditoriales.getValueAt(tableEditoriales.getSelectedRow(), 1), textEditorial.getText());
+			if(textEditorial.getText().matches(regexEditorial)) {
+				bd.updateEditorial((int) Integer.valueOf(tableEditoriales.getValueAt(tableEditoriales.getSelectedRow(), 0).toString()), textEditorial.getText());
 				informar("Se ha actualizado la editorial con éxito.");
 				actualizarTablaEditoriales();
-			} informar("La editorial ingresada no es válida.");
+			} else 
+				informar("La editorial ingresada no es válida.");
 		} catch (SQLException e) {
 			informar("Se ha producido un error al actualizar la editorial.");
 			e.printStackTrace();
@@ -466,7 +503,7 @@ public class Gestor extends JFrame {
 
 	public void eliminarEditorial() {
 		try {
-			bd.deleteEditorial((int) tableEditoriales.getValueAt(tableEditoriales.getSelectedRow(), 1));
+			bd.deleteEditorial((int) Integer.valueOf(tableEditoriales.getValueAt(tableEditoriales.getSelectedRow(), 0).toString()));
 			informar("Se ha eliminado la editorial con éxito.");
 			actualizarTablaEditoriales();
 		} catch (SQLException e) {

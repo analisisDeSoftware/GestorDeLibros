@@ -16,7 +16,7 @@ import login.Encriptar;
 public class BD {
 
 	private Connection conexion = null;
-	private String url = "jdbc:sqlite:C:/Users/leodr/libros.db";
+	private String url = "jdbc:sqlite:libros.db";
 
 	private PreparedStatement pStmInsertLibro;
 	private PreparedStatement pStmUpdateLibro;
@@ -67,7 +67,6 @@ public class BD {
 	public BD() {
 		try {
 			conexion = DriverManager.getConnection(url);
-
 			pStmInsertLibro = conexion.prepareStatement(insertLibro);
 			pStmUpdateLibro = conexion.prepareStatement(updateLibro);
 			pStmDeleteLibro = conexion.prepareStatement(deleteLibro);
@@ -112,7 +111,7 @@ public class BD {
 		pStmInsertLibro.setString(4, editorial);
 		pStmInsertLibro.setInt(5, edicion);
 		pStmInsertLibro.setInt(6, anioPublicacion);
-
+		
 		return pStmInsertLibro.executeUpdate();
 	}
 
@@ -315,6 +314,20 @@ public class BD {
 		pStmDeleteLibro.close();
 		pStmGetLibro.close();
 		pStmGetAll.close();
+		pStmSearchLibro.close();
+		pStmInsertAutor.close();
+		pStmUpdateAutor.close();
+		pStmDeleteAutor.close();
+		pStmGetAutores.close();
+		pStmSearchAutor.close();
+		pStmInsertEditorial.close();
+		pStmUpdateEditorial.close();
+		pStmDeleteEditorial.close();
+		pStmGetEditoriales.close();
+		pStmSearchEditorial.close();
+		pStmInsertUsuario.close();
+		pStmDeleteUsuario.close();		
+		pStmVerificarLogin.close();
 		conexion.close();
 	}
 
