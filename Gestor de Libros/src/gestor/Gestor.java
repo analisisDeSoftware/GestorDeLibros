@@ -1,39 +1,33 @@
 package gestor;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.Color;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
+import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.RenderingHints.Key;
-import java.util.List;
-import javax.swing.JScrollPane;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import javax.swing.JButton;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javax.swing.JComboBox;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.util.List;
+
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 public class Gestor extends JFrame {
 
@@ -63,14 +57,14 @@ public class Gestor extends JFrame {
 	private JTable tableLibros;
 	private DefaultTableModel tableModelLibros;
 	private JTextField textBuscarLibro;
-	private JComboBox comboAutores;
-	private JComboBox comboEditoriales;
+	private JComboBox<String> comboAutores;
+	private JComboBox<String> comboEditoriales;
 	private JLabel lblOrdenar;
-	private JComboBox comboOrdenarPor;
+	private JComboBox<?> comboOrdenarPor;
 	private JTextField textISBN;
 	private JTextField textTitulo;
-	private JComboBox comboAutor;
-	private JComboBox comboEditorial;
+	private JComboBox<String> comboAutor;
+	private JComboBox<String> comboEditorial;
 	private JTextField textEdicion;
 	private JTextField textAnioPublicacion;
 	private JButton btnAgregarLibro;
@@ -148,7 +142,7 @@ public class Gestor extends JFrame {
 				try {
 					bd.close();
 				} catch (SQLException e1) {
-					informar("Error al cerrar la conexión con la base de datos.");
+					informar("Error al cerrar la conexiï¿½n con la base de datos.");
 					e1.printStackTrace();
 				}
 				finally {
@@ -177,6 +171,7 @@ public class Gestor extends JFrame {
 		panelInicioSeleccionado.setVisible(true);
 		panelAdministracion.setVisible(true);
 		panelAdministracionSeleccionado.setVisible(false);
+		panelAdministracionSeleccionado.setEnabled(false);
 
 		paneAdministracionVisible.setVisible(false);
 		paneInicioVisible.setVisible(true);
@@ -254,14 +249,15 @@ public class Gestor extends JFrame {
 				llenarCamposLibro(0);
 				return;
 			}
-
-			libros = bd.searchLibro(textBuscarLibro.getText(), comboAutores.getSelectedItem().toString(),
-					comboEditoriales.getSelectedItem().toString(), comboOrdenarPor.getSelectedItem().toString());
-			for (Libro l : libros) {
-				agregarFilaLibro(l);
+			if(textBuscarLibro.getText() != null && comboAutores.getSelectedItem() != null && comboEditoriales.getSelectedItem() != null ) {
+				libros = bd.searchLibro(textBuscarLibro.getText(), comboAutores.getSelectedItem().toString(),
+						comboEditoriales.getSelectedItem().toString(), comboOrdenarPor.getSelectedItem().toString());
+				for (Libro l : libros) {
+					agregarFilaLibro(l);
+				}
 			}
 		} catch (SQLException e) {
-			informar("Se ha producido un error al realizar la búsqueda del libro.");
+			informar("Se ha producido un error al realizar la bï¿½squeda del libro.");
 			e.printStackTrace();
 		}
 	}
@@ -285,7 +281,7 @@ public class Gestor extends JFrame {
 		try {
 			boolean camposCorrectos = recuperarInformacionLibro();
 			if (camposCorrectos && bd.insertLibro(ISBN, titulo, autor, editorial, edicion, anioPublicacion) == 1) {
-				informar("El libro se ha insertado con éxito.");
+				informar("El libro se ha insertado con ï¿½xito.");
 				actualizarTablaLibros();
 			}
 		} catch (SQLException e) {
@@ -304,7 +300,7 @@ public class Gestor extends JFrame {
 		try {
 			if(recuperarInformacionLibro()) {
 				bd.updateLibro(ISBN, titulo, autor, editorial, edicion, anioPublicacion);
-				informar("Se ha actualizado el libro con éxito.");
+				informar("Se ha actualizado el libro con ï¿½xito.");
 				actualizarTablaLibros();
 			}
 		} catch (SQLException e) {
@@ -316,7 +312,7 @@ public class Gestor extends JFrame {
 	public void eliminarLibro() {
 		try {
 			bd.deleteLibro(textISBN.getText().toString());
-			informar("Se ha eliminado el libro con éxito.");
+			informar("Se ha eliminado el libro con ï¿½xito.");
 			actualizarTablaLibros();
 		} catch (SQLException e) {
 			informar("Se ha producido un error al eliminar el libro.");
@@ -330,15 +326,15 @@ public class Gestor extends JFrame {
 			return false;
 		}
 		if (!textTitulo.getText().matches(regexTitulo)) {
-			informar("El título ingresado es invalido.");
+			informar("El tï¿½tulo ingresado es invalido.");
 			return false;
 		}
 		if (!textEdicion.getText().matches(regexEdicion)) {
-			informar("La edición ingresada es invalida.");
+			informar("La ediciï¿½n ingresada es invalida.");
 			return false;
 		}
 		if (!textAnioPublicacion.getText().matches(regexAnio)) {
-			informar("El año ingresado es invalido.");
+			informar("El aï¿½o ingresado es invalido.");
 			return false;
 		}
 
@@ -376,7 +372,7 @@ public class Gestor extends JFrame {
 				agregarFilaAutor(a);
 			}
 		} catch (SQLException e) {
-			informar("Se ha producido un error al realizar la búsqueda del autor.");
+			informar("Se ha producido un error al realizar la bï¿½squeda del autor.");
 			e.printStackTrace();
 		}
 	}
@@ -385,11 +381,11 @@ public class Gestor extends JFrame {
 		try {
 			if(textAutor.getText().matches(regexAutor)) {
 				if (bd.insertAutor(textAutor.getText()) == 1) {
-					informar("El autor se ha insertado con éxito.");
+					informar("El autor se ha insertado con ï¿½xito.");
 					actualizarTablaAutores();
 				}
 			} else
-				informar("El autor ingresado no es válido.");
+				informar("El autor ingresado no es vï¿½lido.");
 		} catch (SQLException e) {
 			informar("Se ha producido un error al agregar el autor.");
 			e.printStackTrace();
@@ -406,10 +402,10 @@ public class Gestor extends JFrame {
 		try {
 			if(textAutor.getText().matches(regexAutor)) { 
 				bd.updateAutor((int) Integer.valueOf(tableAutores.getValueAt(tableAutores.getSelectedRow(), 0).toString()), textAutor.getText());
-				informar("Se ha actualizado el autor con éxito.");
+				informar("Se ha actualizado el autor con ï¿½xito.");
 				actualizarTablaAutores();
 			} else
-				informar("El autor ingresado no es válido.");
+				informar("El autor ingresado no es vï¿½lido.");
 		} catch (SQLException e) {
 			informar("Se ha producido un error al actualizar el autor.");
 			e.printStackTrace();
@@ -419,7 +415,7 @@ public class Gestor extends JFrame {
 	public void eliminarAutor() {
 		try {
 			bd.deleteAutor((int) Integer.valueOf(tableAutores.getValueAt(tableAutores.getSelectedRow(), 0).toString()));
-			informar("Se ha eliminado el autor con éxito.");
+			informar("Se ha eliminado el autor con ï¿½xito.");
 			actualizarTablaAutores();
 		} catch (SQLException e) {
 			informar("Se ha producido un error al eliminar el autor.");
@@ -460,7 +456,7 @@ public class Gestor extends JFrame {
 				agregarFilaEditorial(e);
 			}
 		} catch (SQLException e) {
-			informar("Se ha producido un error al realizar la búsqueda de la editorial.");
+			informar("Se ha producido un error al realizar la bï¿½squeda de la editorial.");
 			e.printStackTrace();
 		}
 	}
@@ -469,11 +465,11 @@ public class Gestor extends JFrame {
 		try {
 			if(textEditorial.getText().matches(regexEditorial)) {
 				if (bd.insertEditorial(textEditorial.getText()) == 1) {
-					informar("La editorial se ha insertado con éxito.");
+					informar("La editorial se ha insertado con ï¿½xito.");
 					actualizarTablaEditoriales();
 				}
 			} else
-				informar("La editorial ingresada no es válida.");
+				informar("La editorial ingresada no es vï¿½lida.");
 			
 		} catch (SQLException e) {
 			informar("Se ha producido un error al agregar la editorial.");
@@ -491,10 +487,10 @@ public class Gestor extends JFrame {
 		try {
 			if(textEditorial.getText().matches(regexEditorial)) {
 				bd.updateEditorial((int) Integer.valueOf(tableEditoriales.getValueAt(tableEditoriales.getSelectedRow(), 0).toString()), textEditorial.getText());
-				informar("Se ha actualizado la editorial con éxito.");
+				informar("Se ha actualizado la editorial con ï¿½xito.");
 				actualizarTablaEditoriales();
 			} else 
-				informar("La editorial ingresada no es válida.");
+				informar("La editorial ingresada no es vï¿½lida.");
 		} catch (SQLException e) {
 			informar("Se ha producido un error al actualizar la editorial.");
 			e.printStackTrace();
@@ -504,7 +500,7 @@ public class Gestor extends JFrame {
 	public void eliminarEditorial() {
 		try {
 			bd.deleteEditorial((int) Integer.valueOf(tableEditoriales.getValueAt(tableEditoriales.getSelectedRow(), 0).toString()));
-			informar("Se ha eliminado la editorial con éxito.");
+			informar("Se ha eliminado la editorial con ï¿½xito.");
 			actualizarTablaEditoriales();
 		} catch (SQLException e) {
 			informar("Se ha producido un error al eliminar la editorial.");
@@ -570,7 +566,7 @@ public class Gestor extends JFrame {
 		contentPane.add(paneInicioVisible);
 		paneInicioVisible.setLayout(null);
 
-		String columnas[] = { "ISBN", "Título", "Autor", "Editorial", "Edición", "Año de publicación" };
+		String columnas[] = { "ISBN", "Tï¿½tulo", "Autor", "Editorial", "Ediciï¿½n", "Aï¿½o de publicaciï¿½n" };
 		String datos[][] = {};
 		tableModelLibros = new DefaultTableModel(datos, columnas) {
 			@Override
@@ -1026,7 +1022,9 @@ public class Gestor extends JFrame {
 		panelInicio.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				cargarAutoresYEditoriales();
 				panelInicio.setVisible(false);
+				panelInicioSeleccionado.setEnabled(true);
 				panelInicioSeleccionado.setVisible(true);
 				panelAdministracion.setVisible(true);
 				panelAdministracionSeleccionado.setVisible(false);
@@ -1038,26 +1036,32 @@ public class Gestor extends JFrame {
 		panelAdministracion.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				panelAdministracionSeleccionado.setEnabled(true);
 				panelAdministracionSeleccionado.setVisible(true);
 				panelAdministracion.setVisible(false);
 				panelInicioSeleccionado.setVisible(false);
+				panelInicioSeleccionado.setEnabled(false);
 				panelInicio.setVisible(true);
 				paneInicioVisible.setVisible(false);
 				paneAdministracionVisible.setVisible(true);
 			}
 		});
+		
 	}
 
 	public void cargarAutoresYEditoriales() {
-
+		comboAutores.removeAllItems();
+		comboAutor.removeAllItems();
 		comboAutores.addItem("Autor");
 		comboAutor.addItem("Autor");
-
+		comboEditoriales.removeAllItems();
+		comboEditorial.removeAllItems();
 		comboEditoriales.addItem("Editorial");
 		comboEditorial.addItem("Editorial");
 
 		try {
-
+			limpiarTablaAutores();
+			limpiarTablaEditoriales();
 			List<Entidad> autores = bd.getAutores();
 			List<Entidad> editoriales = bd.getEditoriales();
 
