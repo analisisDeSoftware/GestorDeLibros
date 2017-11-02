@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 
 import gestor.BD;
 import gestor.Gestor;
+import gestor.Launcher;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -35,31 +36,6 @@ public class Login extends JFrame {
 	private JPasswordField textPassword;
 	
 	private BD bd;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-						if ("Nimbus".equals(info.getName())) {
-							UIManager.setLookAndFeel(info.getClassName());
-							break;
-						}
-					}
-					Login frame = new Login();
-					frame.setLocationRelativeTo(null);
-					frame.setTitle("Gestor de Libros - Iniciar Sesión");
-					frame.setResizable(false);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -171,10 +147,15 @@ public class Login extends JFrame {
 	}
 	
 	public void login(String user, String password) throws SQLException {
-		if(bd.verificarLogin(user, password)) {
-			setVisible(false);
+		if(bd.verificarLogin(user, password)) { // Verificamos si los datos machean con los de la BD
+			setVisible(false); // Cerramos la ventana
 			dispose();
-			new Gestor().main(null);
+			Gestor frame = new Gestor(); // Creamos un gestor
+			frame.setLocationRelativeTo(null); // Posicionamos la ventana en el centro
+			frame.setTitle("Gestor de Libros - Registrarse"); // Seteamos el nombre de la ventana
+			frame.setResizable(false); // Deshabilitamos el cambio de tamanio
+			frame.setVisible(true); // Hacemos visible el gestor
+			frame.traerTodosLosLibros(); // Buscamos todos los libros en la BD
 		} else {
 			JOptionPane.showMessageDialog(null, "El usuario y la contraseña no coinciden.");
 		}

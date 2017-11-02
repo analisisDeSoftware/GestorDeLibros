@@ -12,26 +12,26 @@ public class Encriptar {
 
 		String md5 = null;
 
-		if (entrada == null)
+		if (entrada == null) // Si la cadena a encriptar no se encuentra inicializada
 			return null;
 
-		entrada = entrada + salt;
+		entrada = entrada + salt; // Agregamos el salt a la entrada
 		
 		try {
 
-			// Create MessageDigest object for MD5
+			// Creamos un objeto MessageDigest para MD5
 			MessageDigest digest = MessageDigest.getInstance("MD5");
 
-			// Update input string in message digest
+			// Actualizamos la entrada mediante el MessageDigest
 			digest.update(entrada.getBytes(), 0, entrada.length());
 
-			// Converts message digest value in base 16 (hex)
+			// Convertimos el valor de MessageDigest en base 16(hexadecimal) 
 			md5 = new BigInteger(1, digest.digest()).toString(16);
 
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
 		
-		return md5;
+		return md5; // Retornamos la entrada encriptada
 	}
 }

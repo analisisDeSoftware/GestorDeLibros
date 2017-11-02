@@ -150,29 +150,7 @@ public class Registro extends JFrame {
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					String user = textUser.getText();
-					String pass = textPassword.getText();
-					String verificacionPass = textPassword2.getText();
-					
-					if(!user.matches(regexUser)) {
-						JOptionPane.showMessageDialog(null, "El nombre de usuario debe estar compuesto por letras minúsculas y/o mayúsculas con un máximo de 15 caracteres.");
-						return;
-					}
-					
-					if(!pass.matches(regexPass)) {
-						JOptionPane.showMessageDialog(null, "La contraseña debe estar formada por al menos 6 caracteres.");
-						return;
-					}
-					
-					if(!pass.equals(verificacionPass)) {
-						JOptionPane.showMessageDialog(null, "La contraseña ingresada y su verificación no coinciden.");
-						return;
-					}
-					
-					registrarse(textUser.getText(), String.valueOf(textPassword.getPassword()));
-					setVisible(false);
-					dispose();
-					new Gestor().main(null);
+					registrarse();
 				} catch (SQLException e) {
 					JOptionPane.showMessageDialog(null, "El usuario ingresado ya existe.");
 					e.printStackTrace();
@@ -193,7 +171,11 @@ public class Registro extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				setVisible(false);
 				dispose();
-				new Login().main(null);
+				Login frame = new Login();
+				frame.setLocationRelativeTo(null);
+				frame.setTitle("Gestor de Libros - Iniciar Sesión");
+				frame.setResizable(false);
+				frame.setVisible(true);
 			}
 		});
 		
@@ -211,7 +193,37 @@ public class Registro extends JFrame {
 		bd = new BD();
 	}
 	
-	public void registrarse(String user, String password) throws SQLException {
-		bd.insertUsuario(user, Encriptar.md5(password));
+	public void registrarse() throws SQLException {
+		String user = textUser.getText();
+		String pass = textPassword.getText();
+		String verificacionPass = textPassword2.getText();
+		
+		if(!user.matches(regexUser)) { // Verificamos que el nombre de usuario sea correcto
+			JOptionPane.showMessageDialog(null, "El nombre de usuario debe estar compuesto por letras minúsculas y/o mayúsculas con un máximo de 15 caracteres.");
+			return;
+		}
+		
+		if(!pass.matches(regexPass)) { // Verificamos que el password sea correcto
+			JOptionPane.showMessageDialog(null, "La contraseña debe estar formada por al menos 6 caracteres.");
+			return;
+		}
+		
+		if(!pass.equals(verificacionPass)) { // Verificamos que ambos passwords coincidan
+			JOptionPane.showMessageDialog(null, "La contraseña ingresada y su verificación no coinciden.");
+			return;
+		}
+		
+		registrarEnDB(textUser.getText(), String.valueOf(textPassword.getPassword())); // Registramos el nuevo usuario en la BD
+		setVisible(false); // Cerramos la ventana
+		dispose();
+		Gestor frame = new Gestor(); // Creamos un gestor
+		frame.setLocationRelativeTo(null); // Posicionamos la ventana en el centro
+		frame.setTitle("Gestor de Libros - Registrarse"); // Seteamos el nombre de la ventana
+		frame.setResizable(false); // Deshabilitamos el cambio de tamanio
+		frame.setVisible(true); // Hacemos visible el gestor
+	}
+	
+	public void registrarEnDB(String user, String password) throws SQLException {
+		bd.insertUsuario(user, Encriptar.md5(password)); // Insertamos el nuevo usuario en la BD
 	}
 }
