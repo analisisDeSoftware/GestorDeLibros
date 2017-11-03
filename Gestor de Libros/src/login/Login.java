@@ -49,18 +49,21 @@ public class Login extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		// Configuracion de la etiqueta de Usuario
 		JLabel lblUser = new JLabel("Usuario");
 		lblUser.setForeground(new Color(255, 255, 255));
 		lblUser.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		lblUser.setBounds(36, 120, 85, 35);
 		contentPane.add(lblUser);
 		
+		// Configuracion de la etiqueta de la contrasenia
 		JLabel lblPassword = new JLabel("Contrase\u00F1a");
 		lblPassword.setForeground(Color.WHITE);
 		lblPassword.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		lblPassword.setBounds(36, 212, 109, 35);
 		contentPane.add(lblPassword);
 		
+		// Configuracion del texto de Usuario
 		textUser = new JTextField();
 		textUser.setForeground(new Color(0, 0, 51));
 		textUser.setFont(new Font("Segoe UI", Font.PLAIN, 22));
@@ -68,6 +71,7 @@ public class Login extends JFrame {
 		contentPane.add(textUser);
 		textUser.setColumns(10);
 		
+		// Configuracion del texto de Contrasenia
 		textPassword = new JPasswordField();
 		textPassword.setForeground(new Color(0, 0, 51));
 		textPassword.setFont(new Font("Segoe UI", Font.PLAIN, 22));
@@ -75,6 +79,7 @@ public class Login extends JFrame {
 		textPassword.setBounds(181, 211, 238, 35);
 		contentPane.add(textPassword);
 		
+		// Configuracion del boton Ingresar
 		JButton btnIngresar = new JButton("Ingresar");
 		btnIngresar.setBackground(new Color(255, 255, 255));
 		btnIngresar.setForeground(new Color(0, 0, 51));
@@ -82,18 +87,21 @@ public class Login extends JFrame {
 		btnIngresar.setBounds(126, 302, 214, 40);
 		contentPane.add(btnIngresar);
 		
+		//Configuracion del panel Registrarse
 		JPanel panelRegistrarse = new JPanel();
 		panelRegistrarse.setBackground(new Color(0, 0, 51));
 		panelRegistrarse.setBounds(96, 380, 289, 35);
 		contentPane.add(panelRegistrarse);
 		panelRegistrarse.setLayout(null);
 		
+		// Configuracion de la etiqueta registrarse
 		JLabel lblRegistrarse = new JLabel("\u00BFNo ten\u00E9s una cuenta? \u00A1Reg\u00EDstrate!");
 		lblRegistrarse.setBounds(0, 0, 289, 35);
 		panelRegistrarse.add(lblRegistrarse);
 		lblRegistrarse.setForeground(new Color(255, 255, 255));
 		lblRegistrarse.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		
+		// Configuracion de la etiqueta Registrarse (en negrita)
 		JLabel lblRegistrarseBold = new JLabel("\u00BFNo ten\u00E9s una cuenta? \u00A1Reg\u00EDstrate!");
 		lblRegistrarseBold.setBounds(0, 0, 302, 35);
 		panelRegistrarse.add(lblRegistrarseBold);
@@ -116,15 +124,15 @@ public class Login extends JFrame {
 		});
 		
 		
-		panelRegistrarse.addMouseListener(new MouseAdapter() {
+		panelRegistrarse.addMouseListener(new MouseAdapter() {// Listener para el panel Registrarse
 			@Override
-			public void mouseEntered(MouseEvent arg0) {
+			public void mouseEntered(MouseEvent arg0) {//Cambia la visualizacion de la etiqueta registrarse a negrita
 				lblRegistrarse.setVisible(false);
 				lblRegistrarseBold.setVisible(true);
 			}
 			
 			@Override
-			public void mouseReleased(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {//Oculta la ventana para acceder a la de Registro
 				setVisible(false);
 				dispose();
 				new Registro().main(null);
@@ -133,16 +141,16 @@ public class Login extends JFrame {
 		
 		
 		
-		contentPane.addMouseListener(new MouseAdapter() {
+		contentPane.addMouseListener(new MouseAdapter() {//Listener para el panel Registrarse
 			@Override
-			public void mouseEntered(MouseEvent e) {
+			public void mouseEntered(MouseEvent e) {//Al sacar el mouse del panel saca la negrita
 				lblRegistrarse.setVisible(true);
 				lblRegistrarseBold.setVisible(false);
 			}
 		});
 		
 		
-		bd = new BD();
+		bd = new BD();//Abre la Base de datos
 		
 	}
 	

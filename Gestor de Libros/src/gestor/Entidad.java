@@ -11,18 +11,18 @@ public class Entidad {
 	}
 
 	public int getId() {
-		return id;
+		return id;//OBtiene id
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.id = id;//Escribe id
 	}
 
 	public String getNombre() {
-		return nombre;
+		return nombre;//OBtiene nombre
 	}
 
 	public void setNombre(String nombre) {
-		this.nombre = nombre;
+		this.nombre = nombre;//Escribe nombre
 	}
 }
