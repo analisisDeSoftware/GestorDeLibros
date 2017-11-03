@@ -1,0 +1,9 @@
+Nuevo Autor - nombre: Probando
+Modificación Autor - nombre: lalacaca, id: 3
+Eliminación Autor - id: 3
+Nueva Editorial - nombre: EditorialdeBolsillo
+Modificación Editorial - nombre: Editando, id: 5
+Elminación Editorial - id: 5
+Nuevo Libro - ISBN: 1234567890123, titulo: Probando, autor: Ricky, editorial: lolo, edicion: 2, anioPublicacion: 2012
+Modificacion Libro - ISBN: 1111111111111, titulo: Pepe, autor: JRR Tolkien, editorial: El saltamontes, edicion: 13, anioPublicacion: 2017
+Eliminación Libro - ISBN: 1111111111111

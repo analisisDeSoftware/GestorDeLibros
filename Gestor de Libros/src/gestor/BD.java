@@ -1,5 +1,8 @@
 package gestor;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,6 +20,7 @@ public class BD {
 
 	private Connection conexion = null;
 	private String url = "jdbc:sqlite:libros.db";
+	private String LOG_NAME = "log.txt";
 
 	private PreparedStatement pStmInsertLibro;
 	private PreparedStatement pStmUpdateLibro;
@@ -112,6 +116,18 @@ public class BD {
 		pStmInsertLibro.setInt(5, edicion); // Seteamos la edicion
 		pStmInsertLibro.setInt(6, anioPublicacion); // Seteamos el anio de publicacion
 		
+		String info = "Nuevo Libro - " +
+				String.format(
+				"ISBN: %s, "
+				+ "titulo: %s, "
+				+ "autor: %s, "
+				+ "editorial: %s, "
+				+ "edicion: %s, "
+				+ "anioPublicacion: %s", 
+				ISBN, titulo, autor, editorial, edicion, anioPublicacion);
+		
+		agregarTextoAlfinal(info);
+		
 		return pStmInsertLibro.executeUpdate(); // Ejecutamos la query
 	}
 
@@ -123,12 +139,31 @@ public class BD {
 		pStmUpdateLibro.setInt(4, edicion); // Seteamos la edicion
 		pStmUpdateLibro.setInt(5, anioPublicacion); // Seteamos el anio de publicacion
 		pStmUpdateLibro.setString(6, ISBN); // Seteamos el ISBN
+		
+		String info = "Modificacion Libro - " +
+				String.format(
+				"ISBN: %s, "
+				+ "titulo: %s, "
+				+ "autor: %s, "
+				+ "editorial: %s, "
+				+ "edicion: %s, "
+				+ "anioPublicacion: %s", 
+				ISBN, titulo, autor, editorial, edicion, anioPublicacion);
+		
+		agregarTextoAlfinal(info);
 
 		return pStmUpdateLibro.executeUpdate(); // Ejecutamos la query
 	}
 
 	public int deleteLibro(String ISBN) throws SQLException {
 		pStmDeleteLibro.setString(1, ISBN); // Seteamos el ISBN
+		
+		String info = "Eliminación Libro - " +
+				String.format(
+				"ISBN: %s",
+				ISBN);
+		
+		agregarTextoAlfinal(info);
 
 		return pStmDeleteLibro.executeUpdate(); // Ejecutamos la query
 	}
@@ -188,17 +223,42 @@ public class BD {
 
 	public int insertAutor(String nombre) throws SQLException {
 		pStmInsertAutor.setString(1, nombre); // Seteamos el nombre
+		
+		String info = "Nuevo Autor - " + 
+				String.format(
+				"nombre: %s",
+				nombre);
+		
+		agregarTextoAlfinal(info);
+		
 		return pStmInsertAutor.executeUpdate(); // Ejecutamos la query
 	}
 
 	public int updateAutor(int id, String nombre) throws SQLException {
 		pStmUpdateAutor.setString(1, nombre); // Seteamos el nombre
 		pStmUpdateAutor.setInt(2, id); // Seteamos el id
+		
+		String info = "Modificación Autor - " + 
+				String.format(
+				"nombre: %s, "
+				+ "id: %s",
+				nombre, id);
+		
+		agregarTextoAlfinal(info);
+		
 		return pStmUpdateAutor.executeUpdate(); // Ejecutamos la query
 	}
 
 	public int deleteAutor(int id) throws SQLException {
 		pStmDeleteAutor.setInt(1, id); // Seteamos el id
+		
+		String info = "Eliminación Autor - " + 
+				String.format(
+				"id: %s",
+				id);
+		
+		agregarTextoAlfinal(info);
+		
 		return pStmDeleteAutor.executeUpdate(); // Ejecutamos la query
 	}
 
@@ -230,17 +290,42 @@ public class BD {
 
 	public int insertEditorial(String nombre) throws SQLException {
 		pStmInsertEditorial.setString(1, nombre); // Seteamos el nombre
+		
+		String info = "Nueva Editorial - " + 
+				String.format(
+				"nombre: %s",
+				nombre);
+		
+		agregarTextoAlfinal(info);
+		
 		return pStmInsertEditorial.executeUpdate(); // Ejecutamos la query
 	}
 
 	public int updateEditorial(int id, String nombre) throws SQLException {
 		pStmUpdateEditorial.setString(1, nombre); // Seteamos el nombre
 		pStmUpdateEditorial.setInt(2, id); // Seteamos el id
+		
+		String info = "Modificación Editorial - " + 
+				String.format(
+				"nombre: %s, "
+				+ "id: %s",
+				nombre, id);
+		
+		agregarTextoAlfinal(info);
+		
 		return pStmUpdateEditorial.executeUpdate(); // Ejecutamos la query
 	}
 
 	public int deleteEditorial(int id) throws SQLException {
 		pStmDeleteEditorial.setInt(1, id); // Seteamos el id
+		
+		String info = "Elminación Editorial - " + 
+				String.format(
+				"id: %s",
+				id);
+		
+		agregarTextoAlfinal(info);
+		
 		return pStmDeleteEditorial.executeUpdate(); // Ejecutamos la query
 	}
 
@@ -330,5 +415,16 @@ public class BD {
 		pStmVerificarLogin.close(); // Cerramos el preparedStatement para verificar un login
 		conexion.close(); // Cerramos la conexion con la BD
 	}
+	
+	public void agregarTextoAlfinal(String info){
+        try {
+            FileWriter fstream = new FileWriter(LOG_NAME, true);
+            BufferedWriter out = new BufferedWriter(fstream);
+            out.write(info + "\r\n");    
+            out.close();
+        } catch (IOException ex) {
+            System.out.println("Error: "+ex.getMessage());
+        }
+ }
 
 }
