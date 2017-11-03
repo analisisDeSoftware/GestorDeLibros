@@ -586,6 +586,7 @@ public class Gestor extends JFrame {
 		tableLibros.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		tableLibros.setModel(tableModelLibros);
 		tableLibros.setRowHeight(25);
+		tableLibros.setToolTipText("Seleccione un libro para cargar su informacion en los campos.");
 		scrollPane.setViewportView(tableLibros);
 
 		// Configuracion de la etiqueta buscar libros
@@ -594,6 +595,7 @@ public class Gestor extends JFrame {
 		paneInicioVisible.add(lblBuscar);
 		lblBuscar.setForeground(new Color(0, 0, 51));
 		lblBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		lblBuscar.setToolTipText("Ingrese el titulo o el ISBN del libro que desea filtrar.");
 
 		// Configuracion del text buscar libro
 		textBuscarLibro = new JTextField();
@@ -603,6 +605,7 @@ public class Gestor extends JFrame {
 		textBuscarLibro.setForeground(new Color(0, 0, 51));
 		textBuscarLibro.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		textBuscarLibro.setColumns(10);
+		textBuscarLibro.setToolTipText("Ingrese el titulo o el ISBN del libro que desea filtrar.");
 
 		// Configuracion del combo autores
 		comboAutores = new JComboBox();
@@ -610,6 +613,7 @@ public class Gestor extends JFrame {
 		paneInicioVisible.add(comboAutores);
 		comboAutores.setForeground(new Color(0, 0, 51));
 		comboAutores.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		comboAutores.setToolTipText("Seleccione el autor por el que desea filtrar.");
 
 		// Configuracion del comobo editoriales
 		comboEditoriales = new JComboBox();
@@ -617,6 +621,7 @@ public class Gestor extends JFrame {
 		paneInicioVisible.add(comboEditoriales);
 		comboEditoriales.setForeground(new Color(0, 0, 51));
 		comboEditoriales.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		comboEditoriales.setToolTipText("Seleccione la editorial por la que desea filtrar.");
 
 		// Configuracion de la etiqueta ordenar libros
 		lblOrdenar = new JLabel("Ordenar por:");
@@ -624,6 +629,7 @@ public class Gestor extends JFrame {
 		paneInicioVisible.add(lblOrdenar);
 		lblOrdenar.setForeground(new Color(0, 0, 51));
 		lblOrdenar.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		lblOrdenar.setToolTipText("Seleccione el criterio para ordenar los libros.");
 
 		// Configuracion del combo ordenar libros
 		comboOrdenarPor = new JComboBox();
@@ -633,6 +639,7 @@ public class Gestor extends JFrame {
 				new String[] { "ISBN", "Titulo", "Autor", "Editorial", "Edicion", "AnioPublicacion" }));
 		comboOrdenarPor.setForeground(new Color(0, 0, 51));
 		comboOrdenarPor.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		comboOrdenarPor.setToolTipText("Seleccione el criterio para ordenar los libros.");
 
 		// Configuracion de la etiqueta ISBN
 		JLabel lblISBN = new JLabel("ISBN:");
@@ -640,6 +647,7 @@ public class Gestor extends JFrame {
 		paneInicioVisible.add(lblISBN);
 		lblISBN.setForeground(new Color(0, 0, 51));
 		lblISBN.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblISBN.setToolTipText("Ingrese el ISBN del libro, el mismo debe estar formado por un numero de 13 digitos.");
 
 		// Configuracion de la etiqueta del titulo del libro
 		JLabel lblTitulo = new JLabel("T\u00EDtulo:");
@@ -647,13 +655,15 @@ public class Gestor extends JFrame {
 		paneInicioVisible.add(lblTitulo);
 		lblTitulo.setForeground(new Color(0, 0, 51));
 		lblTitulo.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-
+		lblTitulo.setToolTipText("Ingrese el titulo del libro, el mismo debe estar formado por al menos un caracter o digito.");
+		
 		// Configuracion de la etiqueta del autor
-		JLabel lblAutor = new JLabel("Autor:");
+		JLabel lblAutor = new JLabel("Autor:"); 
 		lblAutor.setBounds(202, 600, 76, 20);
 		paneInicioVisible.add(lblAutor);
 		lblAutor.setForeground(new Color(0, 0, 51));
 		lblAutor.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblAutor.setToolTipText("Ingrese el autor del libro, el mismo debe estar formado por al menos un caracter.");
 
 		// Configuracion de la etiqueta de la editorial
 		JLabel lblEditorial = new JLabel("Editorial:");
@@ -661,6 +671,7 @@ public class Gestor extends JFrame {
 		paneInicioVisible.add(lblEditorial);
 		lblEditorial.setForeground(new Color(0, 0, 51));
 		lblEditorial.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblEditorial.setToolTipText("Seleccione la editorial del libro.");
 
 		// Configuracion de la etiqueta de la edicion
 		JLabel lblEdicion = new JLabel("Edici\u00F3n:");
@@ -668,6 +679,7 @@ public class Gestor extends JFrame {
 		paneInicioVisible.add(lblEdicion);
 		lblEdicion.setForeground(new Color(0, 0, 51));
 		lblEdicion.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblEdicion.setToolTipText("Ingrese el numero de la edicion del libro, el mismo debe estar formado un numero entero.");
 
 		// Configuracion de la etiqueta del anio de publicacion
 		JLabel lblAnioDePublicacion = new JLabel("A\u00F1o de publicaci\u00F3n:");
@@ -675,13 +687,15 @@ public class Gestor extends JFrame {
 		paneInicioVisible.add(lblAnioDePublicacion);
 		lblAnioDePublicacion.setForeground(new Color(0, 0, 51));
 		lblAnioDePublicacion.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-
+		lblAnioDePublicacion.setToolTipText("Ingrese el anio de publicacion del libro, el mismo debe estar formado por un numero entero.");
+		
 		// Configuracion del texto ISBN
 		textISBN = new JTextField();
 		textISBN.setBounds(282, 459, 253, 30);
 		paneInicioVisible.add(textISBN);
 		textISBN.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		textISBN.setColumns(10);
+		textISBN.setToolTipText("Ingrese el ISBN del libro, el mismo debe estar formado por un numero de 13 digitos.");
 
 		// Configuracion del texto titulo
 		textTitulo = new JTextField();
@@ -689,6 +703,7 @@ public class Gestor extends JFrame {
 		paneInicioVisible.add(textTitulo);
 		textTitulo.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		textTitulo.setColumns(10);
+		textTitulo.setToolTipText("Ingrese el titulo del libro, el mismo debe estar formado por al menos un caracter o digito.");
 
 		// Configuracion del texto autor
 		comboAutor = new JComboBox();
@@ -696,6 +711,7 @@ public class Gestor extends JFrame {
 		paneInicioVisible.add(comboAutor);
 		comboAutor.setForeground(new Color(0, 0, 51));
 		comboAutor.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		comboAutor.setToolTipText("Seleccione el autor del libro.");
 
 		// Configuracion del editorial
 		comboEditorial = new JComboBox();
@@ -703,6 +719,8 @@ public class Gestor extends JFrame {
 		paneInicioVisible.add(comboEditorial);
 		comboEditorial.setForeground(new Color(0, 0, 51));
 		comboEditorial.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		comboEditorial.setToolTipText("Seleccione la editorial del libro.");
+		
 
 		// Configuracion del texto edicion
 		textEdicion = new JTextField();
@@ -710,6 +728,7 @@ public class Gestor extends JFrame {
 		paneInicioVisible.add(textEdicion);
 		textEdicion.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		textEdicion.setColumns(10);
+		textEdicion.setToolTipText("Ingrese el numero de la edicion del libro, el mismo debe estar formado un numero entero.");
 
 		// Configuracion del texto anio de publicacion
 		textAnioPublicacion = new JTextField();
@@ -717,6 +736,7 @@ public class Gestor extends JFrame {
 		paneInicioVisible.add(textAnioPublicacion);
 		textAnioPublicacion.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		textAnioPublicacion.setColumns(10);
+		textAnioPublicacion.setToolTipText("Ingrese el anio de publicacion del libro, el mismo debe estar formado por un numero entero.");
 
 		// Configuracion del boton de agregar libro
 		btnAgregarLibro = new JButton("Agregar");
@@ -724,6 +744,7 @@ public class Gestor extends JFrame {
 		paneInicioVisible.add(btnAgregarLibro);
 		btnAgregarLibro.setForeground(new Color(0, 0, 51));
 		btnAgregarLibro.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		btnAgregarLibro.setToolTipText("Presione el boton para agregar el libro a la base de datos.");
 
 		// Configuracion del boton de modificar libro
 		btnModificarLibro = new JButton("Modificar");
@@ -731,6 +752,7 @@ public class Gestor extends JFrame {
 		paneInicioVisible.add(btnModificarLibro);
 		btnModificarLibro.setForeground(new Color(0, 0, 51));
 		btnModificarLibro.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		btnModificarLibro.setToolTipText("Presione el boton para actualizar el libro en la base de datos.");
 		
 		// Configuracion del boton de eliminar libro
 		btnEliminarLibro = new JButton("Eliminar");
@@ -738,6 +760,7 @@ public class Gestor extends JFrame {
 		paneInicioVisible.add(btnEliminarLibro);
 		btnEliminarLibro.setForeground(new Color(0, 0, 51));
 		btnEliminarLibro.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		btnEliminarLibro.setToolTipText("Presione el boton para eliminar el libro de la base de datos.");
 	}
 
 	public void cargarAdministracion() {
@@ -779,6 +802,7 @@ public class Gestor extends JFrame {
 		tableAutores.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		tableAutores.setModel(tableModelAutores);
 		tableAutores.setRowHeight(25);
+		tableAutores.setToolTipText("Seleccione el autor para cargar su nombre en el campo correspondiente.");
 		scrollPaneAutores.setViewportView(tableAutores);
 
 		// Configuracion del scrollPane de la tabla de editoriales
@@ -792,6 +816,7 @@ public class Gestor extends JFrame {
 		tableEditoriales.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		tableEditoriales.setModel(tableModelEditoriales);
 		tableEditoriales.setRowHeight(25);
+		tableEditoriales.setToolTipText("Seleccione la editorial para cargar su nombre en el campo correspondiente.");
 		scrollPaneEditoriales.setViewportView(tableEditoriales);
 
 		// Configuracion de la etiqueta de buscar autor
@@ -799,6 +824,7 @@ public class Gestor extends JFrame {
 		lblBuscarAutor.setForeground(new Color(0, 0, 51));
 		lblBuscarAutor.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		lblBuscarAutor.setBounds(26, 14, 65, 20);
+		lblBuscarAutor.setToolTipText("Ingrese el nombre del autor por el que desea filtrar.");
 		paneAdministracionVisible.add(lblBuscarAutor);
 
 		// Configuracion del texto buscar autor
@@ -809,6 +835,7 @@ public class Gestor extends JFrame {
 		textBuscarAutor.setForeground(new Color(0, 0, 51));
 		textBuscarAutor.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		textBuscarAutor.setColumns(10);
+		textBuscarAutor.setToolTipText("Ingrese el nombre del autor por el que desea filtrar.");
 		paneAdministracionVisible.add(textBuscarAutor);
 
 		// Configuracion de la etiqueta de buscar editorial
@@ -816,6 +843,7 @@ public class Gestor extends JFrame {
 		lblBuscarEditorial.setForeground(new Color(0, 0, 51));
 		lblBuscarEditorial.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		lblBuscarEditorial.setBounds(26, 350, 65, 20);
+		lblBuscarEditorial.setToolTipText("Ingrese el nombre de la editorial por la que desea filtrar.");
 		paneAdministracionVisible.add(lblBuscarEditorial);
 
 		// Configuracion del texto buscar editorial
@@ -826,6 +854,7 @@ public class Gestor extends JFrame {
 		textBuscarEditorial.setForeground(new Color(0, 0, 51));
 		textBuscarEditorial.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		textBuscarEditorial.setColumns(10);
+		textBuscarEditorial.setToolTipText("Ingrese el nombre de la editorial por la que desea filtrar.");
 		paneAdministracionVisible.add(textBuscarEditorial);
 
 		// Configuracion de la etiqueta de autor
@@ -834,13 +863,15 @@ public class Gestor extends JFrame {
 		paneAdministracionVisible.add(lblAutor);
 		lblAutor.setForeground(new Color(0, 0, 51));
 		lblAutor.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-
+		lblAutor.setToolTipText("Ingrese el autor del libro, el mismo debe estar formado por al menos un caracter.");
+		
 		// Configuracion del texto de autor
 		textAutor = new JTextField();
 		textAutor.setBounds(850, 115, 200, 35);
 		paneAdministracionVisible.add(textAutor);
 		textAutor.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		textAutor.setColumns(10);
+		textAutor.setToolTipText("Ingrese el autor del libro, el mismo debe estar formado por al menos un caracter.");
 
 		// Configuracion del boton de agregar autor
 		btnAgregarAutor = new JButton("Agregar");
@@ -848,6 +879,7 @@ public class Gestor extends JFrame {
 		paneAdministracionVisible.add(btnAgregarAutor);
 		btnAgregarAutor.setForeground(new Color(0, 0, 51));
 		btnAgregarAutor.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		btnAgregarAutor.setToolTipText("Presione el boton para agregar el autor en la base de datos.");
 
 		// Configuracion del boton de modificar autor
 		btnModificarAutor = new JButton("Modificar");
@@ -855,6 +887,7 @@ public class Gestor extends JFrame {
 		paneAdministracionVisible.add(btnModificarAutor);
 		btnModificarAutor.setForeground(new Color(0, 0, 51));
 		btnModificarAutor.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		btnModificarAutor.setToolTipText("Presione el boton para actualizar el autor en la base de datos.");
 
 		// Configuracion del boton de eliminar autor
 		btnEliminarAutor = new JButton("Eliminar");
@@ -862,6 +895,7 @@ public class Gestor extends JFrame {
 		paneAdministracionVisible.add(btnEliminarAutor);
 		btnEliminarAutor.setForeground(new Color(0, 0, 51));
 		btnEliminarAutor.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		btnEliminarAutor.setToolTipText("Presione el boton para eliminar el autor de la base de datos.");
 
 		// Configuracion de la etiqueta de la editorial
 		JLabel lblEditorial = new JLabel("Editorial:");
@@ -869,6 +903,7 @@ public class Gestor extends JFrame {
 		paneAdministracionVisible.add(lblEditorial);
 		lblEditorial.setForeground(new Color(0, 0, 51));
 		lblEditorial.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblEditorial.setToolTipText("Ingrese el nombre de la editorial del libro, el mismo debe estar formado por al menos un caracter.");
 
 		// Configuracion del texto de editorial
 		textEditorial = new JTextField();
@@ -876,6 +911,7 @@ public class Gestor extends JFrame {
 		paneAdministracionVisible.add(textEditorial);
 		textEditorial.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		textEditorial.setColumns(10);
+		textEditorial.setToolTipText("Ingrese el nombre de la editorial del libro, el mismo debe estar formado por al menos un caracter.");
 
 		// Configuracion del boton de agregar editorial
 		btnAgregarEditorial = new JButton("Agregar");
@@ -883,6 +919,7 @@ public class Gestor extends JFrame {
 		paneAdministracionVisible.add(btnAgregarEditorial);
 		btnAgregarEditorial.setForeground(new Color(0, 0, 51));
 		btnAgregarEditorial.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		btnAgregarEditorial.setToolTipText("Presione el boton para agregar la editorial en la base de datos.");
 
 		// Configuracion del boton modificar editorial
 		btnModificarEditorial = new JButton("Modificar");
@@ -890,6 +927,7 @@ public class Gestor extends JFrame {
 		paneAdministracionVisible.add(btnModificarEditorial);
 		btnModificarEditorial.setForeground(new Color(0, 0, 51));
 		btnModificarEditorial.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		btnModificarEditorial.setToolTipText("Presione el boton para actualizar la editorial en la base de datos.");
 
 		// Configuracion del boton eliminar editorial
 		btnEliminarEditorial = new JButton("Eliminar");
@@ -897,6 +935,7 @@ public class Gestor extends JFrame {
 		paneAdministracionVisible.add(btnEliminarEditorial);
 		btnEliminarEditorial.setForeground(new Color(0, 0, 51));
 		btnEliminarEditorial.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		btnEliminarEditorial.setToolTipText("Presione el boton para eliminar la editorial de la base de datos.");
 	}
 
 	// Carga de listeners
